@@ -18,7 +18,7 @@ const app = express();
 app.use(helmet());
 
 app.use(cors({
-  origin: ['http://localhost:4200', 'http://127.0.0.1:4200'], // Autorise les deux variantes
+  origin: ['https://portfolio-frontend-ochre-one.vercel.app'], // Autorise les deux variantes
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Ajoute OPTIONS
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true 
