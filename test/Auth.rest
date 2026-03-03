@@ -1,0 +1,9 @@
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+
+{
+  "email": "admin@portfolio.com",
+  "password": "MonMotDePasseSecret123"
+}

@@ -1,0 +1,21 @@
+
+
+POST http://localhost:3000/api/categories
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE2NzI3MGZlLTMyYjctNDM2ZC1iYTA4LTM1ZDdkYzYyMmZmZiIsImVtYWlsIjoiYWRtaW5AcG9ydGZvbGlvLmNvbSIsImlhdCI6MTc3MjEyNjY4MiwiZXhwIjoxNzcyMjEzMDgyfQ.ZOtibqwHGm0Hv6LVp_uJ-U-jAezPfWFAGl00gpU1LFs
+
+
+{
+  "name": "Développement Web"
+}
+
+
+
+###
+GET  http://localhost:3000/api/categories
+Content-Type: application/json
+
+###
+DELETE  http://localhost:3000/api/categories/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE2NzI3MGZlLTMyYjctNDM2ZC1iYTA4LTM1ZDdkYzYyMmZmZiIsImVtYWlsIjoiYWRtaW5AcG9ydGZvbGlvLmNvbSIsImlhdCI6MTc3MjEyMzk1MCwiZXhwIjoxNzcyMjEwMzUwfQ.Hw90P0_VoVqTxnrNTTcIWuB50zw-JB1efdFdXWrkqBY

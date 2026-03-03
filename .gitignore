@@ -1,0 +1,15 @@
+# Dépendances (le dossier le plus lourd)
+node_modules/
+
+# Variables d'environnement (CONTIENT TES MOTS DE PASSE !)
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dossiers système
+.DS_Store
+dist/
+build/

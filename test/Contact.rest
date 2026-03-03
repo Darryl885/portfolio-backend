@@ -1,0 +1,13 @@
+###
+POST http://localhost:3000/api/contact
+Content-Type: application/json
+
+{
+  "name": "Darryl",
+  "email": "darryldyvan@gmail.com",
+  "message": "envoyé vers ton email réel"
+}
+###
+POST  http://localhost:3000/test-contact
+
+
