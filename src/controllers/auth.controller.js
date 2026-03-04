@@ -32,3 +32,23 @@ exports.login = async (req, res, next) => {
 };
 
 //Le controller appelle le service et gère la réponse HTTP (200 si succès, 401 si erreur).
+
+// --- AJOUT ICI ---
+// 2. Nouvelle méthode pour créer l'admin initial
+exports.initialiserAdmin = async (req, res) => {
+  try {
+    // Appelle la fonction correspondante dans ton auth.service.js
+    const result = await authService.initialiserAdmin();
+
+    res.status(201).json({
+      success: true,
+      message: "Administrateur créé avec succès !",
+      data: result
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "Erreur lors de la création de l'admin"
+    });
+  }
+};

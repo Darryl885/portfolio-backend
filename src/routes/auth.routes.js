@@ -38,6 +38,8 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth.controller');
 
+router.post('/initialiser-mon-admin', authController.initialiserAdmin);
+
 // Vérifie que authController.login existe aussi !
 router.post('/login', authController.login);
 
