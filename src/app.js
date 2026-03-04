@@ -5,6 +5,8 @@ const swaggerSpec = require('./config/swagger');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const db = require('./config/database');
+
 // Import des routes
 const projectRoutes = require('./routes/project.routes');
 const categoryRoutes = require('./routes/category.routes');
@@ -36,19 +38,21 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // ROUTE TEMPORAIRE DE SECOURS - À SUPPRIMER APRÈS USAGE
 app.get('/api/initialiser-mon-admin', async (req, res) => {
   try {
-    // Utilise le hash de ton mot de passe local (celui qui commence par $2b$)
     const hashLocal = '$2b$10$aH0rQWd8AjpAZTsQm/tnkuZWDxQlETuaUjjSJF6/iLt...'; 
     const email = 'admin@portfolio.com';
 
-    // On insère directement dans la base Aiven via ton objet de connexion db
-    // Vérifie bien que ta table s'appelle 'users' et tes colonnes 'email'/'password'
-    const [result] = await db.execute(
-      'INSERT INTO users (email, password) VALUES (?, ?)', 
-      [email, hashLocal]
+    // Avec Sequelize, on utilise query() pour du SQL brut
+    await sequelize.query(
+      'INSERT INTO users (email, password, created_at, updated_at) VALUES (?, ?, NOW(), NOW())', 
+      {
+        replacements: [email, hashLocal],
+        type: sequelize.QueryTypes.INSERT
+      }
     );
 
-    res.send(' Admin créé avec succès dans Aiven !');
+    res.send(' Admin créé avec succès dans Aiven via Sequelize !');
   } catch (err) {
+    console.error(err);
     res.status(500).send(' Erreur : ' + err.message);
   }
 });
