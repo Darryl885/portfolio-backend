@@ -62,14 +62,17 @@ app.use('/api/categories', categoryRoutes);
 
 app.use('/api/auth', authRoutes);
 // --- 3. GESTION DES ERREURS (TOUJOURS EN DERNIER) ---
-
+app.post('/api/auth/login', (req, res) => {
+  console.log("Requête de login reçue !");
+  res.json({ message: "DEBUG: La route répond enfin !" });
+});
 // Middleware pour capturer les routes inexistantes (404)
 // Si aucune route ci-dessus n'a matché, on arrive ici
-app.use((req, res, next) => {
-  const error = new Error('Ressource non trouvée');
-  error.status = 404;
-  next(error);
-});
+// app.use((req, res, next) => {
+//   const error = new Error('Ressource non trouvée');
+//   error.status = 404;
+//   next(error);
+// });
 
 
 // Middleware Global de gestion d'erreurs
