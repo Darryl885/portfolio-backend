@@ -8,9 +8,10 @@ const morgan = require('morgan');
 const db = require('./config/database');
 
 // Import des routes
+const authRoutes = require('./routes/auth.routes');
 const projectRoutes = require('./routes/project.routes');
 const categoryRoutes = require('./routes/category.routes');
-const authRoutes = require('./routes/auth.routes');
+
 const contactRoutes = require('./routes/contact.routes');
 
 const app = express();
@@ -49,16 +50,17 @@ app.post('/api/test-check', (req, res) => {
 });
 
 // Branchement des ressources
+
 app.use('/api/projects', projectRoutes);
 app.use('/api/contact', contactRoutes); // Ta route de contact est ici
-
+app.use('/api/categories', categoryRoutes);
 // app.post('/api/contact', (req, res) => {
 //   res.json({ direct: true });
 // });
-app.use('/api/categories', categoryRoutes);
+
+
+
 app.use('/api/auth', authRoutes);
-
-
 // --- 3. GESTION DES ERREURS (TOUJOURS EN DERNIER) ---
 
 // Middleware pour capturer les routes inexistantes (404)
@@ -68,6 +70,7 @@ app.use((req, res, next) => {
   error.status = 404;
   next(error);
 });
+
 
 // Middleware Global de gestion d'erreurs
 app.use((err, req, res, next) => {
