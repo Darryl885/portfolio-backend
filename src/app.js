@@ -34,31 +34,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // --- 2. DÉFINITION DES ROUTES ---
-const sequelize = require('./config/database');
+
 
 // ROUTE TEMPORAIRE DE SECOURS - À SUPPRIMER APRÈS USAGE
-app.get('/api/initialiser-mon-admin', async (req, res) => {
-  try {
-    const hashLocal = '$2b$10$aH0rQWd8AjpAZTsQm/tnkuZWDxQlETuaUjjSJF6/iLt...'; // Ton vrai hash
-    const email = 'admin@portfolio.com'; // Ton vrai email
 
-    // colonnes (5) : id, email, password, created_at, updated_at
-    // valeurs  (5) : 1, email, hashLocal, NOW(), NOW()
-    await sequelize.query(
-      'INSERT INTO users (id, email, password, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())', 
-      {
-        replacements: [1, email, hashLocal], // 3 valeurs ici car les 2 NOW() sont en dur dans le SQL
-        type: sequelize.QueryTypes.INSERT
-      }
-    );
-
-    res.send(' Admin (ID: 1) créé avec succès !');
-  } catch (err) {
-    console.error(err);
-    // On affiche l'erreur détaillée pour comprendre si une colonne manque encore
-    res.status(500).send(' Erreur : ' + err.message);
-  }
-});
 // Route de base
 app.get('/', (req, res) => {
   res.json({ message: "Bienvenue sur l'API de mon Portfolio !" });
