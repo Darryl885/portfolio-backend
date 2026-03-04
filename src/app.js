@@ -34,6 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // --- 2. DÉFINITION DES ROUTES ---
+const sequelize = require('./config/database');
 
 // ROUTE TEMPORAIRE DE SECOURS - À SUPPRIMER APRÈS USAGE
 app.get('/api/initialiser-mon-admin', async (req, res) => {
