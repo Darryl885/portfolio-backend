@@ -32,23 +32,31 @@ class AuthService {
   }
 
   // --- AJOUT DE LA MÉTHODE D'INITIALISATION ---
-  async initialiserAdmin() {
-    // 1. Vérifier si un admin existe déjà
-    const existingAdmin = await User.findOne({ where: { role: 'admin' } });
+ async initialiserAdmin() {
+    // 1. On commente la vérification du rôle qui pose problème
+    /* const existingAdmin = await User.findOne({ where: { role: 'admin' } });
     if (existingAdmin) {
       throw new Error("L'administrateur a déjà été créé.");
     }
+    */
 
-    // 2. Hacher le mot de passe manuellement pour le premier admin
-    // Remplace 'ton_mot_de_passe_secret' par celui que tu veux utiliser
+    // 2. Hacher le mot de passe
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('MonMotDePasseSecret123', salt);
+    const hashedPassword = await bcrypt.hash('ton_mot_de_passe_ici', salt);
 
-    // 3. Créer l'utilisateur dans la base de données
+    // 3. Créer l'utilisateur SANS la colonne role pour l'instant
+    // (On vérifie si l'email existe déjà à la place)
+    const email = 'ton-email@exemple.com';
+    const userExists = await User.findOne({ where: { email } });
+    
+    if (userExists) {
+      throw new Error("Cet utilisateur existe déjà.");
+    }
+
     const newAdmin = await User.create({
-      email: 'admin@portfolio.com', // Change cet email
+      email: email,
       password: hashedPassword,
-      role: 'admin'
+      // role: 'admin' <-- ON COMMENTE CETTE LIGNE AUSSI
     });
 
     const adminJson = newAdmin.toJSON();
