@@ -42,11 +42,11 @@ class AuthService {
     // 2. Hacher le mot de passe manuellement pour le premier admin
     // Remplace 'ton_mot_de_passe_secret' par celui que tu veux utiliser
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('ton_mot_de_passe_secret', salt);
+    const hashedPassword = await bcrypt.hash('MonMotDePasseSecret123', salt);
 
     // 3. Créer l'utilisateur dans la base de données
     const newAdmin = await User.create({
-      email: 'ton-email@exemple.com', // Change cet email
+      email: 'admin@portfolio.com', // Change cet email
       password: hashedPassword,
       role: 'admin'
     });
