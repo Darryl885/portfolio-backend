@@ -44,9 +44,9 @@ app.get('/api/initialiser-mon-admin', async (req, res) => {
 
     // Avec Sequelize, on utilise query() pour du SQL brut
     await sequelize.query(
-      'INSERT INTO users (email, password, created_at, updated_at) VALUES (?, ?, NOW(), NOW())', 
+      'INSERT INTO users (id , email, password, created_at, updated_at) VALUES (?, ?, NOW(), NOW())', 
       {
-        replacements: [email, hashLocal],
+        replacements: [1 , email, hashLocal],
         type: sequelize.QueryTypes.INSERT
       }
     );
