@@ -1,10 +1,10 @@
 // src/models/user.model.js
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-const bcrypt = require('bcrypt'); // Pense à faire : npm install bcrypt
+const bcrypt = require('bcrypt'); 
 
 class User extends Model {
-  // Méthode personnalisée pour vérifier le mot de passe lors de la connexion
+  // Méthode pour vérifier le mot de passe lors de la connexion
   async validatePassword(password) {
     return await bcrypt.compare(password, this.password);
   }
@@ -21,19 +21,24 @@ User.init({
     allowNull: false,
     unique: true,
     validate: {
-      isEmail: true // Validation native Sequelize
+      isEmail: true 
     }
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    // Sécurité : Ne jamais renvoyer le mot de passe lors d'un SELECT par défaut
+    // Hachage automatique lors de la création ou modification
     set(value) {
-      // On hache le mot de passe avant de l'enregistrer en DB
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(value, salt);
       this.setDataValue('password', hash);
     }
+  },
+  // --- AJOUT DE LA COLONNE ROLE ---
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'user' // Par défaut, un utilisateur normal
   }
 }, { 
   sequelize, 

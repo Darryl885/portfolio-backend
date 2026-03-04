@@ -32,38 +32,21 @@ class AuthService {
   }
 
   // --- AJOUT DE LA MÉTHODE D'INITIALISATION ---
- async initialiserAdmin() {
-    // 1. On commente la vérification du rôle qui pose problème
-    /* const existingAdmin = await User.findOne({ where: { role: 'admin' } });
-    if (existingAdmin) {
-      throw new Error("L'administrateur a déjà été créé.");
-    }
-    */
+async initialiserAdmin() {
+    const email = 'admin@portfolio.com';
+    const password = 'MonMotDePasseSecret123'; // PAS DE HASH ICI, le modèle s'en charge !
 
-    // 2. Hacher le mot de passe
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('ton_mot_de_passe_ici', salt);
-
-    // 3. Créer l'utilisateur SANS la colonne role pour l'instant
-    // (On vérifie si l'email existe déjà à la place)
-    const email = 'ton-email@exemple.com';
     const userExists = await User.findOne({ where: { email } });
-    
-    if (userExists) {
-      throw new Error("Cet utilisateur existe déjà.");
-    }
+    if (userExists) throw new Error("Cet utilisateur existe déjà.");
 
     const newAdmin = await User.create({
       email: email,
-      password: hashedPassword,
-      // role: 'admin' <-- ON COMMENTE CETTE LIGNE AUSSI
+      password: password, // Sequelize va le hacher tout seul !
+      role: 'admin'
     });
 
-    const adminJson = newAdmin.toJSON();
-    delete adminJson.password;
-
-    return adminJson;
-  }
+    return { id: newAdmin.id, email: newAdmin.email };
+}
 }
 
 module.exports = new AuthService();
