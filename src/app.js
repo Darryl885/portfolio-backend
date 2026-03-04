@@ -33,6 +33,26 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // --- 2. DÉFINITION DES ROUTES ---
 
+// ROUTE TEMPORAIRE DE SECOURS - À SUPPRIMER APRÈS USAGE
+app.get('/api/initialiser-mon-admin', async (req, res) => {
+  try {
+    // Utilise le hash de ton mot de passe local (celui qui commence par $2b$)
+    const hashLocal = '$2b$10$aH0rQWd8AjpAZTsQm/tnkuZWDxQlETuaUjjSJF6/iLt...'; 
+    const email = 'admin@portfolio.com';
+
+    // On insère directement dans la base Aiven via ton objet de connexion db
+    // Vérifie bien que ta table s'appelle 'users' et tes colonnes 'email'/'password'
+    const [result] = await db.execute(
+      'INSERT INTO users (email, password) VALUES (?, ?)', 
+      [email, hashLocal]
+    );
+
+    res.send(' Admin créé avec succès dans Aiven !');
+  } catch (err) {
+    res.status(500).send(' Erreur : ' + err.message);
+  }
+});
+
 // Route de base
 app.get('/', (req, res) => {
   res.json({ message: "Bienvenue sur l'API de mon Portfolio !" });
