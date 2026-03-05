@@ -14,7 +14,7 @@ async function startServer() {
     // 2. Synchronisation des modèles
     // force: false -> Ne supprime pas les données existantes
     // alter: true  -> Met à jour les tables si tu modifies les modèles
-    await sequelize.sync({ force:false });
+    await sequelize.sync({ force: false, alter: false });
     console.log(' Modèles synchronisés avec la base de données.');
 
     // 3. Lancement du serveur
